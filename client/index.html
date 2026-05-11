@@ -59,7 +59,66 @@
                 <button class="tasks-filter__done px-6 py-3  text-xs rounded-2xl cursor-pointer">Done</button>
             </div>
 
-            <div class="tasks-main">
+            <div class="tasks-list mt-3 grid  grid-cols-2 gap-4">
+                <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative ">
+                    <div class="task-list__card__checkbox">
+                        <input type="checkbox" id="task-checkbox" class="hidden peer" />
+                        <label
+                            for="task-checkbox"
+                            class="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-Neutral cursor-pointer
+                            transition-all  peer-checked:bg-Neutral"
+                        >
+                            <!-- Dấu chấm tròn nhỏ bên trong khi checked -->
+                            <i class="fa-solid fa-check size-1 text-white peer-checked:block hidden"></i>
+                            <span class="w-2 h-2 rounded-full bg-white peer-checked:block hidden"></span>
+                        </label>
+                    </div>
+                    <div class="">
+                        <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
+                        <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
+                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium ">High</span>
+                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium ">Work</span>
+                        <span class="task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5">
+                            <i class="fa-regular fa-clock mr-1"></i> 
+                            Today , 4:00 PM
+                        </span>
+                    </div>
+                </div>
+
+                <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative">
+                    <div class="task-list__card__checkbox">
+                        <input type="checkbox" class="inline size-5" name="" id="">
+                    </div>
+                    <div>
+                        <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
+                        <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
+                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium">High</span>
+                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Work</span>
+                        <span class="task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5">
+                            <i class="fa-regular fa-clock mr-1"></i> 
+                            Today , 4:00 PM
+                        </span>
+                    </div>
+                </div>
+
+                <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative">
+                    <div class="task-list__card__checkbox">
+                        <input type="checkbox" class="inline size-5" name="" id="">
+                    </div>
+                    <div>
+                        <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
+                        <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
+                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium">High</span>
+                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Work</span>
+                        <span class="task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5">
+                            <i class="fa-regular fa-clock mr-1"></i> 
+                            Today , 4:00 PM
+                        </span>
+                    </div>
+                </div>
+
+                
+
                 
             </div>
             
