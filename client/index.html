@@ -44,33 +44,37 @@
     <main class="main dark:bg-[#191c22] bg-[#e7e8f1] h-screen w-screen p-4">
         <!-- Phần task  -->
         <section class="tasks">
-            <div class="tasks-block flex m-3 gap-2 ">
-                <h2 class="tasks-block__title text-2xl font-bold me-auto">List Tasks</h2>
-                <input class="tasks-block__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs dark:text-[#e1e2eb] px-2 w-1/3" type="text" name="search" id="" placeholder="Search tasks...">
-                <button class="tasks-block__add cursor-pointer rounded-2xl text-xs bg-Primary px-4 py-2 text-[#fefcff]">
+
+            <!-- Phần task header -->
+            <div class="tasks-header flex m-3 gap-2 ">
+                <h2 class="tasks-header__title text-2xl font-bold me-auto">List Tasks</h2>
+                <input class="tasks-header__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs dark:text-[#e1e2eb] px-2 w-1/3" type="text" name="search" id="" placeholder="Search tasks...">
+                <button class="tasks-header__add cursor-pointer rounded-2xl text-xs bg-Primary px-4 py-2 text-[#fefcff]">
                     <i class="fa-solid fa-plus mr-2"></i>
                     Add Task
                 </button>
             </div>
 
+            <!-- Phần lọc task -->
             <div class="tasks-filter inline-flex mt-3 gap-5 bg-[#fefcff] dark:bg-[#11131a] rounded-2xl">
                 <button class="tasks-filter__all px-6 py-3 bg-Primary text-[#fefcff] text-xs rounded-2xl cursor-pointer">All</button>
                 <button class="tasks-filter__doing px-6 py-3  text-xs rounded-2xl cursor-pointer">Unfinished</button>
                 <button class="tasks-filter__done px-6 py-3  text-xs rounded-2xl cursor-pointer">Done</button>
             </div>
 
+            <!-- Phần danh sách task -->
             <div class="tasks-list mt-3 grid  grid-cols-2 gap-4">
+
                 <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative ">
                     <div class="task-list__card__checkbox">
-                        <input type="checkbox" id="task-checkbox" class="hidden peer" />
+                        <input type="checkbox" id="task-checkbox1" class="hidden peer" />
                         <label
-                            for="task-checkbox"
-                            class="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-Neutral cursor-pointer
-                            transition-all  peer-checked:bg-Neutral"
+                            for="task-checkbox1"
+                            class="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-gray-400 cursor-pointer transition-all
+                            peer-checked:border-blue-500 peer-checked:bg-blue-500 "
                         >
-                            <!-- Dấu chấm tròn nhỏ bên trong khi checked -->
-                            <i class="fa-solid fa-check size-1 text-white peer-checked:block hidden"></i>
-                            <span class="w-2 h-2 rounded-full bg-white peer-checked:block hidden"></span>
+                            <!-- Dấu tick xuất hiện khi checked -->
+                            <i class="fas fa-check text-xs text-[#fefcff] dark:text-[#11131a]"></i>
                         </label>
                     </div>
                     <div class="">
@@ -87,7 +91,15 @@
 
                 <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative">
                     <div class="task-list__card__checkbox">
-                        <input type="checkbox" class="inline size-5" name="" id="">
+                        <input type="checkbox" id="task-checkbox2" class="hidden peer" />
+                        <label
+                            for="task-checkbox2"
+                            class="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-gray-400 cursor-pointer transition-all
+                            peer-checked:border-blue-500 peer-checked:bg-blue-500 "
+                        >
+                            <!-- Dấu tick xuất hiện khi checked -->
+                            <i class="fas fa-check text-xs text-[#fefcff] dark:text-[#11131a]"></i>
+                        </label>
                     </div>
                     <div>
                         <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
@@ -103,7 +115,15 @@
 
                 <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative">
                     <div class="task-list__card__checkbox">
-                        <input type="checkbox" class="inline size-5" name="" id="">
+                        <input type="checkbox" id="task-checkbox3" class="hidden peer" />
+                        <label
+                            for="task-checkbox3"
+                            class="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-gray-400 cursor-pointer transition-all
+                            peer-checked:border-blue-500 peer-checked:bg-blue-500 "
+                        >
+                            <!-- Dấu tick xuất hiện khi checked -->
+                            <i class="fas fa-check text-xs text-[#fefcff] dark:text-[#11131a]"></i>
+                        </label>
                     </div>
                     <div>
                         <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
@@ -116,43 +136,9 @@
                         </span>
                     </div>
                 </div>
-
-                
-
-                
             </div>
-            
         </section>
     </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script>
-        // xử lí phần dark mode
-        const btnDark = document.querySelector(".btn-dark");
-        btnDark.addEventListener("click", function () {
-            document.documentElement.classList.toggle("dark");
-        });
-    </script>
+    <script src="./src/app.js"></script>
 </body>
 </html>

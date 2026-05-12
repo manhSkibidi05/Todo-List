@@ -3,44 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/output.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./src/output.css">
+    <title>Todo List</title>
 </head>
-<body>
- <div class="tasks-list mt-3 grid grid-rows-3 grid-cols-3 gap-4">
-                <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative grid-rows-subgrid col-span-2">
-                    <div class="task-list__card__checkbox">
-                        <input type="checkbox" class="inline size-5" name="" id="">
-                    </div>
-                    <div class="">
-                        <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
-                        <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
-                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium ">High</span>
-                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium ">Work</span>
-                        <span class="task-list__card__time text-red-500 text-xs font-medium">
-                            <i class="fa-regular fa-clock mr-1"></i> 
-                            Today , 4:00 PM
-                        </span>
-                    </div>
-                </div>
-
-                <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5  grid-rows-subgrid">
-                    <div class="task-list__card__checkbox">
-                        <input type="checkbox" class="inline size-5" name="" id="">
-                    </div>
-                    <div>
-                        <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
-                        <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
-                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium">High</span>
-                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Work</span>
-                        <span class="task-list__card__time text-red-500 text-xs font-medium ">
-                            <i class="fa-regular fa-clock mr-1"></i> 
-                            Today , 4:00 PM
-                        </span>
-                    </div>
-                </div>
-
-                
+<body class="font-Inter dark:bg-[#11131a] dark:text-[#e1e2eb] bg-[#fefcff] transition-all duration-300 ease-linear flex">
+    <!-- Phần header -->
+    <header class="header min-w-70 h-screen relative">
+        <!-- Phần bar -->
+        <section class="bar p-2">
+            <h1 class="bar-title text-Primary text-3xl font-bold p-4 text-center mb-2">Focus & Flow</h1>
+            <div class="bar-btn grid grid-cols-1 gap-2">
+                <button class="bar-btn__tasks text-start p-2 bg-Primary rounded-xl text-md text-[#fefcff] cursor-pointer">
+                    <i class="fa-regular fa-circle-check mr-2"></i>
+                    Tasks
+                </button>
+                <button class="bar-btn__calendar text-start p-2  rounded-xl text-md cursor-pointer">
+                    <i class="fa-regular fa-calendar mr-2"></i>
+                    Calendar
+                </button>
+                <button class="bar-btn__categories text-start p-2  rounded-xl text-md cursor-pointer">
+                    <i class="fa-solid fa-layer-group mr-2"></i>
+                    Categories
+                </button>
+                <button class="bar-btn__settings text-start p-2  rounded-xl text-md cursor-pointer">
+                    <i class="fa-solid fa-gear mr-2"></i>
+                    Settings
+                </button>
             </div>
+        </section>
+
+        <!-- btn-dark -->
+        <button class="btn-dark absolute bottom-5 right-2 px-4 py-2 rounded-xl dark:bg-[#191c22] bg-[#e7e8f1] text-sm cursor-pointer">
+            <i class="fa-regular fa-moon mr-2"></i>
+            Switch
+        </button>
+    </header>
+
+    <!-- Phần main -->
+    <main class="main dark:bg-[#191c22] bg-[#e7e8f1] h-screen w-screen p-4">
+        <!-- Phần task  -->
+        <section class="tasks">
+
+            <!-- Phần task header -->
+            <div class="tasks-header flex m-3 gap-2 ">
+                <h2 class="tasks-header__title text-2xl font-bold me-auto">New Tasks</h2>
+            </div>
+
+            <!-- Phần task form -->
+            <div class="tasks-form grid grid-cols-3 gap-4 mt-6">
+                <div class="tasks-form__content col-span-2 p-6 bg-[#fefcff] dark:bg-[#11131a] rounded-md flex flex-col gap-4">
+                    <label class="font-light" for="">TASK TITLE</label>
+                    <input class="bg-Secondary/20 p-2 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in" type="text" name="" id="">
+                    <label class="font-light" for="">DESCRIPTION</label>
+                    <textarea class="bg-Secondary/20 p-2 h-30 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in" name="" id=""></textarea>
+                </div>
+                <div class="tasks-form__content  p-6 bg-[#fefcff] dark:bg-[#11131a] rounded-md flex flex-col gap-4">
+                    <label class="font-light" for="">CATEGORY</label>
+                    <input class="bg-Secondary/20 p-2 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in" type="text" name="" id="">
+                    <label class="font-light" for="">DUE DATE</label>
+                    <input class="bg-Secondary/20 p-2 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in" type="date" name="" id="">
+                </div>
+
+            </div>
+            
+
+            
+        </section>
+    </main>
+    <script src="./src/app.js"></script>
 </body>
 </html>
