@@ -16,19 +16,19 @@
             <div class="bar-btn grid grid-cols-1 gap-2">
                 <button class="bar-btn__tasks text-start p-2 bg-Primary rounded-xl text-md text-[#fefcff] cursor-pointer">
                     <i class="fa-regular fa-circle-check mr-2"></i>
-                    Tasks
+                    Công việc
                 </button>
                 <button class="bar-btn__calendar text-start p-2  rounded-xl text-md cursor-pointer">
                     <i class="fa-regular fa-calendar mr-2"></i>
-                    Calendar
+                    Lịch
                 </button>
                 <button class="bar-btn__categories text-start p-2  rounded-xl text-md cursor-pointer">
                     <i class="fa-solid fa-layer-group mr-2"></i>
-                    Categories
+                    Danh mục
                 </button>
                 <button class="bar-btn__settings text-start p-2  rounded-xl text-md cursor-pointer">
                     <i class="fa-solid fa-gear mr-2"></i>
-                    Settings
+                    Cài đặt
                 </button>
             </div>
         </section>
@@ -36,7 +36,7 @@
         <!-- btn-dark -->
         <button class="btn-dark absolute bottom-5 right-2 px-4 py-2 rounded-xl dark:bg-[#191c22] bg-[#e7e8f1] text-sm cursor-pointer">
             <i class="fa-regular fa-moon mr-2"></i>
-            Switch
+            Đổi nền
         </button>
     </header>
 
@@ -47,19 +47,19 @@
 
             <!-- Phần task header -->
             <div class="tasks-header flex m-3 gap-2 ">
-                <h2 class="tasks-header__title text-2xl font-bold me-auto">List Tasks</h2>
-                <input class="tasks-header__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs dark:text-[#e1e2eb] px-2 w-1/3" type="text" name="search" id="" placeholder="Search tasks...">
+                <h2 class="tasks-header__title text-2xl font-bold me-auto">Danh sách công việc</h2>
+                <input class="tasks-header__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs dark:text-[#e1e2eb] px-2 w-1/3" type="text" name="search" id="" placeholder="Tìm kiếm công việc...">
                 <button class="tasks-header__add cursor-pointer rounded-2xl text-xs bg-Primary px-4 py-2 text-[#fefcff]">
                     <i class="fa-solid fa-plus mr-2"></i>
-                    Add Task
+                    Thêm công việc
                 </button>
             </div>
 
             <!-- Phần lọc task -->
             <div class="tasks-filter inline-flex mt-3 gap-5 bg-[#fefcff] dark:bg-[#11131a] rounded-2xl">
-                <button class="tasks-filter__all px-6 py-3 bg-Primary text-[#fefcff] text-xs rounded-2xl cursor-pointer">All</button>
-                <button class="tasks-filter__doing px-6 py-3  text-xs rounded-2xl cursor-pointer">Unfinished</button>
-                <button class="tasks-filter__done px-6 py-3  text-xs rounded-2xl cursor-pointer">Done</button>
+                <button class="tasks-filter__all px-4 py-3 bg-Primary text-[#fefcff] text-xs rounded-2xl cursor-pointer">Tất cả</button>
+                <button class="tasks-filter__doing px-4 py-3  text-xs rounded-2xl cursor-pointer">Chưa hoàn thành</button>
+                <button class="tasks-filter__done px-4 py-3  text-xs rounded-2xl cursor-pointer">Hoàn thành</button>
             </div>
 
             <!-- Phần danh sách task -->
@@ -80,11 +80,10 @@
                     <div class="">
                         <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
                         <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
-                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium ">High</span>
-                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium ">Work</span>
+                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium ">Làm việc</span>
                         <span class="task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5">
                             <i class="fa-regular fa-clock mr-1"></i> 
-                            Today , 4:00 PM
+                            Hôm nay , 4:00 PM
                         </span>
                     </div>
                 </div>
@@ -104,20 +103,19 @@
                     <div>
                         <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
                         <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
-                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium">High</span>
-                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Work</span>
+                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Làm việc</span>
                         <span class="task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5">
                             <i class="fa-regular fa-clock mr-1"></i> 
-                            Today , 4:00 PM
+                            Hôm nay , 4:00 PM
                         </span>
                     </div>
                 </div>
 
                 <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative">
                     <div class="task-list__card__checkbox">
-                        <input type="checkbox" id="task-checkbox3" class="hidden peer" />
+                        <input type="checkbox" id="task-checkbox2" class="hidden peer" />
                         <label
-                            for="task-checkbox3"
+                            for="task-checkbox2"
                             class="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-gray-400 cursor-pointer transition-all
                             peer-checked:border-blue-500 peer-checked:bg-blue-500 "
                         >
@@ -128,11 +126,10 @@
                     <div>
                         <h3 class="tasks-list__card__content inline text-md font-bold">Finalize Q3 Product Roadmap & Stakeholder Presentation</h3>
                         <p class="tasks-list__card__des text-xs text-Neutral my-2">Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday's all-hands meeting. Ensure financial</p>
-                        <span class="task-list__card__priority px-2 py-1 bg-red-300 text-red-800 text-xs rounded-md font-medium">High</span>
-                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Work</span>
+                        <span class="task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium">Làm việc</span>
                         <span class="task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5">
                             <i class="fa-regular fa-clock mr-1"></i> 
-                            Today , 4:00 PM
+                            Hôm nay , 4:00 PM
                         </span>
                     </div>
                 </div>
