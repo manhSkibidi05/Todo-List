@@ -10,14 +10,21 @@
 
     function render(){
         tasksShow.innerHTML = ``;
-        createPageTask();
+        createPageShow();
+
+        
     }
     
-    // chức năng chuyển trang tạo task
+    // chức năng chuyển sang trang tạo task mới
     const btnAdd = document.querySelector(`.tasks-header__add`);
     btnAdd.addEventListener(`click` , () => {
-        render();
+        renderForm();
     })
+
+    function renderForm(){
+        tasksShow.innerHTML = ``;
+        createPageTask();
+    }
 
     function createPageTask(){
         // phần tasks header
@@ -115,11 +122,23 @@
         addBtn.className = 'task-form__btn__add bg-Primary cursor-pointer text-sm text-[#fefcff] px-4 py-2 rounded-md';
         addBtn.setAttribute('type', 'button');
         addBtn.textContent = 'Thêm công việc';
+        addBtn.addEventListener('click', () => {
+            let newTask = {
+                title: inputTitle.value,
+                description: textarea.value,
+                category: select.value,
+                time: inputTime.value
+            };
+            addTask(newTask);
+        });
 
         let cancelBtn = document.createElement('button');
         cancelBtn.className = 'task-form__btn__cancel bg-red-500 cursor-pointer text-sm text-[#fefcff] px-4 py-2 rounded-md';
         cancelBtn.setAttribute('type', 'button');
         cancelBtn.textContent = 'Hủy';
+        cancelBtn.addEventListener('click', () => {
+            render();
+        });
 
         btnDiv.appendChild(addBtn);
         btnDiv.appendChild(cancelBtn);
@@ -134,9 +153,136 @@
         tasksShow.appendChild(tasksForm);
     }
 
-    // chức năng tạo mới task
-
     function addTask(task){
-        tasks.push(task);
+        let newTask = {  
+            title: task.title,
+            description: task.description,
+            category: task.category,
+            time: task.time
+        };
+        tasks.push(newTask);
         render();
     }
+
+    // chức năng hiện thị task
+
+    function createPageShow(){
+        let taskHeader = document.createElement(`div`);
+        taskHeader.className = `tasks-header flex m-3 gap-2`;
+        
+        let taskHeaderTitle = document.createElement(`h2`);
+        taskHeaderTitle.className = `tasks-header__title text-2xl font-bold me-auto`;
+        taskHeaderTitle.textContent = `Danh sách công việc`;
+        taskHeader.appendChild(taskHeaderTitle);
+
+        let taskHeaderSearch = document.createElement(`input`);
+        taskHeaderSearch.className = `tasks-header__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs dark:text-[#e1e2eb] px-2 w-1/3 border-2 border-Secondary/20 
+        focus:border-Primary transition-all duration-200 ease-in`;
+        taskHeaderSearch.setAttribute(`type`, `text`);
+        taskHeaderSearch.setAttribute(`placeholder`, `Tìm kiếm công việc...`);
+        taskHeader.appendChild(taskHeaderSearch);
+
+        let taskHeaderAdd = document.createElement(`button`);
+        taskHeaderAdd.className = `tasks-header__add cursor-pointer rounded-2xl text-xs bg-Primary px-4 py-2 text-[#fefcff]`;
+        taskHeaderAdd.textContent = `Thêm công việc`;
+        let taskIcon = document.createElement(`i`);
+        taskIcon.className = `fa-solid fa-plus ml-2`;
+        taskHeaderAdd.appendChild(taskIcon);
+        taskHeader.appendChild(taskHeaderAdd);
+        taskHeaderAdd.addEventListener('click', () => {
+            renderForm();
+        });
+
+        tasksShow.appendChild(taskHeader);
+
+        // phần filter
+        let filter = document.createElement(`div`);
+        filter.className = `tasks-filter inline-flex mt-3 gap-5 bg-[#fefcff] dark:bg-[#11131a] rounded-2xl`;
+        
+        let filterAll = document.createElement(`button`);
+        filterAll.className = `tasks-filter__all px-4 py-3 bg-Primary text-[#fefcff] text-xs rounded-2xl cursor-pointer`;
+        filterAll.textContent = `Tất cả`;
+
+        let filterUnfinished = document.createElement(`button`);
+        filterUnfinished.className = `tasks-filter__work px-4 py-3 text-xs rounded-2xl cursor-pointer`;
+        filterUnfinished.textContent = `Chưa hoàn thành`;
+
+        let filterFinished = document.createElement(`button`);
+        filterFinished.className = `tasks-filter__finished px-4 py-3 text-xs rounded-2xl cursor-pointer`;
+        filterFinished.textContent = `Đã hoàn thành`;
+
+        filter.appendChild(filterAll);
+        filter.appendChild(filterUnfinished);
+        filter.appendChild(filterFinished);
+        tasksShow.appendChild(filter);
+
+        // phần task list
+        let taskList = document.createElement(`div`);
+        taskList.className = `tasks-list mt-3 grid  grid-cols-2 gap-4`;
+        taskList.appendChild(createCardTask());
+        tasksShow.appendChild(taskList);
+
+    }
+
+    function createCardTask(){
+        // Tạo task card
+        let card = document.createElement('div');
+        card.className = 'tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative';
+
+        // Phần checkbox
+        let checkboxDiv = document.createElement('div');
+        checkboxDiv.className = 'task-list__card__checkbox';
+
+        let checkboxInput = document.createElement('input');
+        checkboxInput.type = 'checkbox';
+        checkboxInput.id = 'task-checkbox2'; // Nên tạo id động nếu có nhiều card
+        checkboxInput.className = 'hidden peer';
+
+        let checkboxLabel = document.createElement('label');
+        checkboxLabel.setAttribute('for', 'task-checkbox2');
+        checkboxLabel.className = 'inline-flex items-center justify-center w-5 h-5 rounded border-2 border-gray-400 cursor-pointer transition-all peer-checked:border-blue-500 peer-checked:bg-blue-500';
+
+        let icon = document.createElement('i');
+        icon.className = 'fas fa-check text-xs text-[#fefcff] dark:text-[#11131a]';
+
+        checkboxLabel.appendChild(icon);
+        checkboxDiv.appendChild(checkboxInput);
+        checkboxDiv.appendChild(checkboxLabel);
+
+        // Phần nội dung bên phải
+        let contentDiv = document.createElement('div');
+
+        let title = document.createElement('h3');
+        title.className = 'tasks-list__card__content inline text-md font-bold';
+        title.textContent = 'Finalize Q3 Product Roadmap & Stakeholder Presentation';
+
+        let description = document.createElement('p');
+        description.className = 'tasks-list__card__des text-xs text-Neutral my-2';
+        description.textContent = 'Compile all departmental feedback, adjust timelines for the new mobile release, and prepare the slide deck for Friday\'s all-hands meeting. Ensure financial';
+
+        let categorySpan = document.createElement('span');
+        categorySpan.className = 'task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium';
+        categorySpan.textContent = 'Làm việc';
+
+        let timeSpan = document.createElement('span');
+        timeSpan.className = 'task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5';
+
+        let clockIcon = document.createElement('i');
+        clockIcon.className = 'fa-regular fa-clock mr-1';
+        timeSpan.appendChild(clockIcon);
+        timeSpan.appendChild(document.createTextNode(' Hôm nay , 4:00 PM'));
+
+        contentDiv.appendChild(title);
+        contentDiv.appendChild(description);
+        contentDiv.appendChild(categorySpan);
+        contentDiv.appendChild(timeSpan);
+
+        // Ghép card
+        card.appendChild(checkboxDiv);
+        card.appendChild(contentDiv);
+
+        return card;
+        
+    }
+
+    

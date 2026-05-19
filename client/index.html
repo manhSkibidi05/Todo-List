@@ -48,17 +48,19 @@
             <!-- Phần task header -->
             <div class="tasks-header flex m-3 gap-2 ">
                 <h2 class="tasks-header__title text-2xl font-bold me-auto">Danh sách công việc</h2>
-                <input class="tasks-header__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs dark:text-[#e1e2eb] px-2 w-1/3" type="text" name="search" id="" placeholder="Tìm kiếm công việc...">
+                <input class="tasks-header__search outline-0 dark:bg-[#11131a] bg-[#fefcff] text-Neutral rounded-2xl text-xs
+                dark:text-[#e1e2eb] px-2 w-1/3" type="text" name="search" id="" placeholder="Tìm kiếm công việc...">
                 <button class="tasks-header__add cursor-pointer rounded-2xl text-xs bg-Primary px-4 py-2 text-[#fefcff]">
-                    <i class="fa-solid fa-plus mr-2"></i>
                     Thêm công việc
+                    <i class="fa-solid fa-plus ml-2"></i>
+                    
                 </button>
             </div>
 
             <!-- Phần lọc task -->
             <div class="tasks-filter inline-flex mt-3 gap-5 bg-[#fefcff] dark:bg-[#11131a] rounded-2xl">
                 <button class="tasks-filter__all px-4 py-3 bg-Primary text-[#fefcff] text-xs rounded-2xl cursor-pointer">Tất cả</button>
-                <button class="tasks-filter__doing px-4 py-3  text-xs rounded-2xl cursor-pointer">Chưa hoàn thành</button>
+                <button class="tasks-filter__unfinished px-4 py-3  text-xs rounded-2xl cursor-pointer">Chưa hoàn thành</button>
                 <button class="tasks-filter__done px-4 py-3  text-xs rounded-2xl cursor-pointer">Hoàn thành</button>
             </div>
 
@@ -113,9 +115,9 @@
 
                 <div class="tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative">
                     <div class="task-list__card__checkbox">
-                        <input type="checkbox" id="task-checkbox2" class="hidden peer" />
+                        <input type="checkbox" id="task-checkbox3" class="hidden peer" />
                         <label
-                            for="task-checkbox2"
+                            for="task-checkbox3"
                             class="inline-flex items-center justify-center w-5 h-5 rounded border-2 border-gray-400 cursor-pointer transition-all
                             peer-checked:border-blue-500 peer-checked:bg-blue-500 "
                         >
