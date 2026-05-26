@@ -61,6 +61,16 @@
         categorySpan.className = 'task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium';
         categorySpan.textContent = cate;
 
+        let removeBtn = document.createElement(`button`);
+        removeBtn.className = `task-list__card__remove text-xs font-medium ml-2 cursor-pointer bg-[#fefcff] dark:bg-[#11131a] hover:text-red-500 border px-2 py-1 rounded-md
+        transition-all ease-in duration-200`;
+        removeBtn.type = `button`;
+        removeBtn.addEventListener(`click` , () => {removeTaskById(idTask)});
+
+        let trashIcon = document.createElement('i');
+        trashIcon.className = 'fa-regular fa-trash-can';
+        removeBtn.appendChild(trashIcon)
+
         let timeSpan = document.createElement('span');
         timeSpan.className = 'task-list__card__time text-red-500 text-xs font-medium absolute right-5 bottom-5';
 
@@ -72,6 +82,7 @@
         contentDiv.appendChild(titleShow);
         contentDiv.appendChild(description);
         contentDiv.appendChild(categorySpan);
+        contentDiv.appendChild(removeBtn);
         contentDiv.appendChild(timeSpan);
 
         // Ghép card
@@ -97,8 +108,7 @@
         taskHeaderSearch.setAttribute(`type`, `text`);
         taskHeaderSearch.setAttribute(`placeholder`, `Tìm kiếm công việc...`);
         taskHeaderSearch.addEventListener(`input` , (e) => {
-            console.log(1)
-            // searchByKeyword(e.target.value);
+            searchByKeyword(e.target.value);
         })
         taskHeader.appendChild(taskHeaderSearch);
 
@@ -174,28 +184,76 @@
             taskList.appendChild(createCardTask(task[`id`] , task[`completed`] , task[`title`] , task[`description`] , task[`category`] , task[`time`]));
             tasksShow.appendChild(taskList);
         }
+        tasksShow.appendChild(taskList);
     }
 
-    // các hàm thay đổi state
     function addTask(newTask){
         tasks.push(newTask);
         renderListPage();
     }
 
+    // hàm render danh sách công việc
+    function renderListTask(){
+        let taskList = document.querySelector(`.tasks-list`);
+        taskList.innerHTML = ``;
+
+        let tasksFilter = [...tasks];
+        if(tasksState === `Unfinished`) tasksFilter = tasksFilter.filter(value => value[`completed`] === false);
+        if(tasksState === `Finished`) tasksFilter = tasksFilter.filter(value => value[`completed`] === true);
+        if(tasksKeyword.trim() !== ``) tasksFilter = tasksFilter.filter(value => value[`title`].toLowerCase().includes(tasksKeyword.trim().toLowerCase()));
+        
+        let filterAll = document.querySelector(`.tasks-filter__all`);
+        let filterUnfinished = document.querySelector(`.tasks-filter__work`);
+        let filterFinished = document.querySelector(`.tasks-filter__finished`);
+        if(tasksState === `All`){
+            filterAll.classList.add(`bg-Primary`);
+            filterUnfinished.classList.remove(`bg-Primary`);
+            filterFinished.classList.remove(`bg-Primary`);
+        }
+        if(tasksState === `Finished`){
+            filterAll.classList.remove(`bg-Primary`);
+            filterUnfinished.classList.remove(`bg-Primary`);
+            filterFinished.classList.add(`bg-Primary`);
+        } 
+        if(tasksState === `Unfinished`){
+            filterAll.classList.remove(`bg-Primary`);
+            filterUnfinished.classList.add(`bg-Primary`);
+            filterFinished.classList.remove(`bg-Primary`);
+        }
+
+        if(tasksFilter.length === 0){
+            let warning = document.createElement(`p`);
+            warning.textContent = `Khum tồn tại công việc nào ở đây @_@`;
+            warning.className = `text-sm text-red-500 font-medium`;
+            taskList.appendChild(warning);
+        }else{
+            for(let task of tasksFilter){
+                taskList.appendChild(createCardTask(task[`id`] , task[`completed`] , task[`title`] , task[`description`] , task[`category`] , task[`time`]));
+            }
+        }
+        
+    }
+
+    function removeTaskById(idTask){
+        let pos = tasks.findIndex(task => task[`id`] === idTask);
+        if(pos !== -1) tasks.splice(pos , 1);
+        renderListTask();
+    }
+
     function changeCompleted(idTask){
         let pos = tasks.findIndex(task => task[`id`] === idTask);
-        tasks[pos][`completed`] = !tasks[pos][`completed`];
-        renderListPage();
+        if(pos !== -1) tasks[pos][`completed`] = !tasks[pos][`completed`];
+        renderListTask();
     }
 
     function changeStateList(state){
         tasksState = state;
-        renderListPage();
+        renderListTask();
     }
 
     function searchByKeyword(keyword){
         tasksKeyword = keyword;
-        renderListPage();
+        renderListTask();
     }
     
 // render page thêm công việc
