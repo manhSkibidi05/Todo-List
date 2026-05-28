@@ -52,13 +52,23 @@
         let titleShow = document.createElement('h3');
         titleShow.className = 'tasks-list__card__content inline text-md font-bold';
         titleShow.textContent = title;
+        if(completed){
+            titleShow.classList.add(`line-through`); // Nếu đã hoàn thành thì gạch ngang tiêu đề
+            titleShow.style.color = '#888'; // Thay đổi màu chữ thành màu xám
+        } 
 
         let description = document.createElement('p');
         description.className = 'tasks-list__card__des text-xs text-Neutral my-2';
         description.textContent = des;
 
         let categorySpan = document.createElement('span');
-        categorySpan.className = 'task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium';
+        switch(cate){
+            case `Làm việc`: categorySpan.className = 'task-list__card__category px-2 py-1 bg-blue-300 text-blue-800 text-xs rounded-md font-medium'; break;
+            case `Cá nhân`:categorySpan.className = 'task-list__card__category px-2 py-1 bg-green-300 text-green-800 text-xs rounded-md font-medium'; break;
+            case `Sức khỏe`:categorySpan.className = 'task-list__card__category px-2 py-1 bg-pink-300 text-pink-800 text-xs rounded-md font-medium'; break;
+            case `Học tập`:categorySpan.className = 'task-list__card__category px-2 py-1 bg-orange-300 text-orange-800 text-xs rounded-md font-medium'; break;
+            case `Khác`:categorySpan.className = 'task-list__card__category px-2 py-1 bg-gray-300 text-gray-800 text-xs rounded-md font-medium'; break;
+        }
         categorySpan.textContent = cate;
 
         let removeBtn = document.createElement(`button`);
@@ -77,7 +87,38 @@
         let clockIcon = document.createElement('i');
         clockIcon.className = 'fa-regular fa-clock mr-1';
         timeSpan.appendChild(clockIcon);
-        timeSpan.appendChild(document.createTextNode(time));
+
+        function formatRemaining(dateString) {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const target = new Date(dateString);
+            target.setHours(0,0,0,0);
+            
+            if (target < today) return "Đã quá hạn";
+            
+            let years = target.getFullYear() - today.getFullYear();
+            let months = target.getMonth() - today.getMonth();
+            let days = target.getDate() - today.getDate();
+            
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            const parts = [];
+            if (years > 0) parts.push(`${years} năm`);
+            if (months > 0) parts.push(`${months} tháng`);
+            if (days > 0) parts.push(`${days} ngày`);
+            
+            return parts.length ? `Còn ${parts.join(' ')}` : "Hạn là hôm nay";
+        }
+        let timeShow = formatRemaining(time);
+        timeSpan.appendChild(document.createTextNode(timeShow));
 
         contentDiv.appendChild(titleShow);
         contentDiv.appendChild(description);
@@ -349,6 +390,12 @@
         inputTime.setAttribute('type', 'date');
         inputTime.setAttribute('name', 'task-time');
         inputTime.setAttribute('id', 'task-time');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        inputTime.min = todayStr;
 
         detailDiv.appendChild(labelCate);
         detailDiv.appendChild(select);
@@ -364,6 +411,16 @@
         addBtn.setAttribute('type', 'button');
         addBtn.textContent = 'Thêm công việc';
         addBtn.addEventListener('click', () => {
+            if(inputTitle.value.trim() === `` || textarea.value.trim() === ``){
+                let warning = document.querySelector(`.tasks-form__warning`);
+                if(!warning){
+                    warning = document.createElement(`p`);
+                    warning.className = `tasks-form__warning text-sm text-red-500 font-medium`;
+                    warning.textContent = `Tiêu đề và mô tả không được để trống!`;
+                    leftContent.appendChild(warning);
+                }
+                return;
+            }
             let newTask = {
                 id : tasks.length + 1,
                 completed : false,
@@ -392,7 +449,7 @@
         tasksForm.appendChild(leftContent);
         tasksForm.appendChild(rightWrapper);
 
-        // Gắn toàn bộ form vào container tasksShow (giả định đã có)
+        // Gắn toàn bộ form vào container tasksShow 
         tasksShow.appendChild(tasksForm);
     }
 

@@ -7,87 +7,55 @@
     <link rel="stylesheet" href="./src/output.css">
     <title>Todo List</title>
 </head>
-<body class="font-Inter dark:bg-[#11131a] dark:text-[#e1e2eb] bg-[#fefcff] transition-all duration-300 ease-linear flex">
-    <!-- Phần header -->
-    <header class="header min-w-70 h-screen relative">
-        <!-- Phần bar -->
-        <section class="bar p-2">
-            <h1 class="bar-title text-Primary text-3xl font-bold p-4 text-center mb-2">Focus & Flow</h1>
-            <div class="bar-btn grid grid-cols-1 gap-2">
-                <button class="bar-btn__tasks text-start p-2 bg-Primary rounded-xl text-md text-[#fefcff] cursor-pointer">
-                    <i class="fa-regular fa-circle-check mr-2"></i>
-                    Công việc
-                </button>
-                <button class="bar-btn__calendar text-start p-2  rounded-xl text-md cursor-pointer">
-                    <i class="fa-regular fa-calendar mr-2"></i>
-                    Lịch
-                </button>
-                <button class="bar-btn__categories text-start p-2  rounded-xl text-md cursor-pointer">
-                    <i class="fa-solid fa-layer-group mr-2"></i>
-                    Danh mục
-                </button>
-                <button class="bar-btn__settings text-start p-2  rounded-xl text-md cursor-pointer">
-                    <i class="fa-solid fa-gear mr-2"></i>
-                    Cài đặt
-                </button>
-            </div>
-        </section>
+    <body class="font-Inter dark:bg-[#11131a] dark:text-[#e1e2eb] bg-[#fefcff] transition-all duration-300 ease-linear flex">
 
-        <!-- btn-dark -->
-        <button class="btn-dark absolute bottom-5 right-2 px-4 py-2 rounded-xl dark:bg-[#191c22] bg-[#e7e8f1] text-sm cursor-pointer">
-            <i class="fa-regular fa-moon mr-2"></i>
-            Đổi nền
-        </button>
-    </header>
+        <input type="date" name="" id="timer">
+        <input type="time" name="" id="timer2">
+        <button class="take">Lấy</button>
+    <script >
+        let date = new Date();
+        
+        let year = date.getFullYear();
+        let month = String(date.getMonth() + 1).padStart(2 , `0`);
+        let day = String(date.getDate()).padStart(2 , `0`);
 
-    <!-- Phần main -->
-    <main class="main dark:bg-[#191c22] bg-[#e7e8f1] h-screen w-screen p-4">
-        <!-- Phần task  -->
-        <section class="tasks">
+        let today = `${year}-${month}-${day}`;
 
-            <!-- Phần task header -->
-            <div class="tasks-header flex m-3 gap-2 ">
-                <h2 class="tasks-header__title text-2xl font-bold me-auto">Thêm công việc mới</h2>
-            </div>
+        let take = document.querySelector(`.take`);
+        let time = document.querySelector(`#timer`);
+        let time2 = document.querySelector(`#timer2`);
 
-            <!-- Phần task form -->
-            <div class="tasks-form flex gap-4 mt-6">
-                <div class="tasks-form__content min-w-2/3 p-6 bg-[#fefcff] dark:bg-[#11131a] rounded-md flex flex-col gap-4">
-                    <label class="font-light" for="task-title">Tiêu đề công việc</label>
-                    <input class="bg-Secondary/20 p-2 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in"
-                    type="text" name="task-title" id="task-title">
-
-                    <label class="font-light" for="task-des">Mô tả</label>
-                    <textarea class="bg-Secondary/20 p-2 h-30 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in" 
-                    name="task-des" id="task-des"></textarea>
-                </div>
-                <div class="w-90 flex flex-col gap-4">
-                    <div class="tasks-form__detail  p-6 bg-[#fefcff] dark:bg-[#11131a] rounded-md flex flex-col gap-4">
-                        <label class="font-light" for="task-cate">Danh mục</label>
-                        <select name="task-cate" id="task-cate" class="bg-Secondary/20 p-2 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in">
-                            <option class="dark:bg-black/70" value="Làm việc">Làm việc</option>
-                            <option class="dark:bg-black/70" value="Cá nhân">Cá nhân</option>
-                            <option class="dark:bg-black/70" value="Sức khỏe">Sức khỏe</option>
-                            <option class="dark:bg-black/70" value="Học tập">Học tập</option>
-                            <option class="dark:bg-black/70" value="Khác">Khác</option>
-                        </select>
-
-                        <label class="font-light" for="task-time">Thời hạn</label>
-                        <input class="bg-Secondary/20 p-2 rounded-md outline-0 border-2 border-Secondary/20 focus:border-Primary transition-all duration-200 ease-in" 
-                        type="date" name="task-time" id="task-time">
-                    </div>
-                
-                    <div class="tasks-form__btn flex flex-col gap-4">
-                        <button class="task-form__btn__add bg-Primary cursor-pointer text-sm text-[#fefcff] px-4 py-2 rounded-md" type="button">Thêm công việc</button>
-                        <button class="task-form__btn__cancel bg-red-500 cursor-pointer text-sm text-[#fefcff] px-4 py-2 rounded-md" type="button">Hủy</button>
-                    </div>
-                </div>
-            </div>
+        let currentTime = 0;
+        let currentTime2 = 0;
+        take.addEventListener(`click` , (e) => {
+            currentTime = time.value;
+            currentTime2 = time2.value;
             
+            let times = currentTime.split(`-`).reverse();
+            let times2 = currentTime2.split(`:`);
 
-            
-        </section>
-    </main>
-    <script src="./src/app.js"></script>
+            console.log(times)
+            console.log(times2)
+
+            console.log(currentTime)
+            console.log(today)
+
+
+            if(today === currentTime) console.log(`gay`);
+            else console.log(`ko`)
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+    </script>
 </body>
 </html>
