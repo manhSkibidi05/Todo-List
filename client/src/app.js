@@ -1,5 +1,6 @@
 // xử lí phần dark mode
     const btnDark = document.querySelector(".btn-dark");
+    document.documentElement.classList.add(`dark`);
     btnDark.addEventListener("click", function () {
         document.documentElement.classList.toggle("dark");
     });
@@ -17,7 +18,7 @@
         createPageShow();
     }
 
-    function createCardTask(idTask ,completed , title , des , cate , time){
+    function createCardTask(idTask ,completed , title , des , cate , time , expiry){
         // Tạo task card
         let card = document.createElement('div');
         card.className = 'tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative';
@@ -120,6 +121,12 @@
         let timeShow = formatRemaining(time);
         timeSpan.appendChild(document.createTextNode(timeShow));
 
+        updateExpiry(idTask);
+        if(!expiry){
+            card.classList.add(`opacity-50`); // Nếu đã quá hạn thì giảm độ mờ của card
+            card.classList.add(`pointer-events-none`); // Không cho phép tương tác với card đã quá hạn
+        }
+
         contentDiv.appendChild(titleShow);
         contentDiv.appendChild(description);
         contentDiv.appendChild(categorySpan);
@@ -163,7 +170,25 @@
         taskHeaderAdd.addEventListener('click', () => {
             renderAddPage();
         });
+        
+        let blockNotification = document.createElement(`div`);
+        blockNotification.className = `tasks-header__notification-block absolute right-5 top-17 w-120 bg-[#fefcff] dark:bg-[#11131a] rounded-md shadow-lg p-4 hidden`;
+        let notificationTitle = document.createElement(`h3`);
+        notificationTitle.className = `text-sm font-bold mb-2`;
+        notificationTitle.textContent = `Thông báo`;
+        blockNotification.appendChild(notificationTitle);
+        taskHeader.appendChild(blockNotification);
 
+        let taskHeaderNotification = document.createElement(`button`);
+        taskHeaderNotification.className = `tasks-header__notification cursor-pointer rounded-2xl text-xs bg-Primary px-4 py-2 text-[#fefcff]`;
+        let notificationIcon = document.createElement(`i`);
+        notificationIcon.className = `fa-solid fa-bell`;
+        taskHeaderNotification.appendChild(notificationIcon);
+        taskHeaderNotification.addEventListener('click', () => {
+            let blockNotification = document.querySelector(`.tasks-header__notification-block`);
+            blockNotification.classList.toggle(`hidden`);
+        });
+        taskHeader.appendChild(taskHeaderNotification);
         tasksShow.appendChild(taskHeader);
 
         // phần filter
@@ -222,7 +247,7 @@
         if(tasksKeyword.trim() !== ``) tasksFilter = tasksFilter.filter(value => value[`title`].includes(tasksKeyword.trim()));     
         
         for(let task of tasksFilter){
-            taskList.appendChild(createCardTask(task[`id`] , task[`completed`] , task[`title`] , task[`description`] , task[`category`] , task[`time`]));
+            taskList.appendChild(createCardTask(task[`id`] , task[`completed`] , task[`title`] , task[`description`] , task[`category`] , task[`time`] , task[`expiry`]));
             tasksShow.appendChild(taskList);
         }
         tasksShow.appendChild(taskList);
@@ -231,6 +256,7 @@
     function addTask(newTask){
         tasks.push(newTask);
         renderListPage();
+        saveToLocalStorage();
     }
 
     // hàm render danh sách công việc
@@ -265,14 +291,14 @@
         if(tasksFilter.length === 0){
             let warning = document.createElement(`p`);
             warning.textContent = `Khum tồn tại công việc nào ở đây @_@`;
-            warning.className = `text-sm text-red-500 font-medium`;
+            warning.className = `p-5 text-sm text-red-500 font-medium`;
             taskList.appendChild(warning);
         }else{
             for(let task of tasksFilter){
-                taskList.appendChild(createCardTask(task[`id`] , task[`completed`] , task[`title`] , task[`description`] , task[`category`] , task[`time`]));
+                taskList.appendChild(createCardTask(task[`id`] , task[`completed`] , task[`title`] , task[`description`] , task[`category`] , task[`time`] , task[`expiry`]));
             }
         }
-        
+        saveToLocalStorage();
     }
 
     function removeTaskById(idTask){
@@ -295,6 +321,20 @@
     function searchByKeyword(keyword){
         tasksKeyword = keyword;
         renderListTask();
+    }
+
+    function updateExpiry(id){
+        let pos = tasks.findIndex(task => task[`id`] === id);
+        if(pos !== -1){
+            const today = new Date();
+            const target = new Date(tasks[pos][`time`]);
+            target.setHours(24,0,0,0);
+            if(target >= today){
+                tasks[pos][`expiry`] = true;
+            } else {
+                tasks[pos][`expiry`] = false;
+            }
+        }
     }
     
 // render page thêm công việc
@@ -411,12 +451,12 @@
         addBtn.setAttribute('type', 'button');
         addBtn.textContent = 'Thêm công việc';
         addBtn.addEventListener('click', () => {
-            if(inputTitle.value.trim() === `` || textarea.value.trim() === ``){
+            if(inputTitle.value.trim() === `` || textarea.value.trim() === `` || inputTime.value.trim() === ``){
                 let warning = document.querySelector(`.tasks-form__warning`);
                 if(!warning){
                     warning = document.createElement(`p`);
                     warning.className = `tasks-form__warning text-sm text-red-500 font-medium`;
-                    warning.textContent = `Tiêu đề và mô tả không được để trống!`;
+                    warning.textContent = `Tiêu đề, mô tả và thời hạn không được để trống!`;
                     leftContent.appendChild(warning);
                 }
                 return;
@@ -427,7 +467,8 @@
                 title: inputTitle.value,
                 description: textarea.value,
                 category: select.value,
-                time: inputTime.value
+                time: inputTime.value,
+                expiry: true
             };
             addTask(newTask);
         });
@@ -453,6 +494,19 @@
         tasksShow.appendChild(tasksForm);
     }
 
+// các hàm localStorage 
+    function saveToLocalStorage(){
+        localStorage.setItem(`listTask` , JSON.stringify(tasks));
+    }
+
+    function loadToLocalStorage(){
+        let arrLocal = localStorage.getItem(`listTask`);
+        tasks = JSON.parse(arrLocal);
+        renderListPage();
+    }
+
 
 // gọi render page danh sách công việc lần đầu 
-renderListPage();
+
+    loadToLocalStorage();
+    
