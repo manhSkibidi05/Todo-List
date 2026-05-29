@@ -9,4 +9,7 @@
     --color-Secondary:#6776a2;
     --color-Tertiary:#ab4c00;
     --color-Neutral:#75777f;
+    --animation-fadeIn:fadeIn 0.3s ease-in-out;
+    --animation-fadeOut:fadeOut 0.3s ease-in-out;
 }
+

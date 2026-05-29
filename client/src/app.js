@@ -11,6 +11,8 @@
     let tasksState = `All`;
     let tasksKeyword = ``;
 
+    let tasksExpiry = [];
+
     const tasksShow = document.querySelector(`.tasks`);
 
     function renderListPage(){
@@ -21,7 +23,7 @@
     function createCardTask(idTask ,completed , title , des , cate , time , expiry){
         // Tạo task card
         let card = document.createElement('div');
-        card.className = 'tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative';
+        card.className = 'tasks-list__card p-4 bg-[#fefcff] dark:bg-[#11131a] rounded-xl flex gap-5 relative animation-fadeIn animation-fadeOut transition-all duration-200 ease-in';
 
         // Phần checkbox
         let checkboxDiv = document.createElement('div');
@@ -121,10 +123,10 @@
         let timeShow = formatRemaining(time);
         timeSpan.appendChild(document.createTextNode(timeShow));
 
-        updateExpiry(idTask);
         if(!expiry){
-            card.classList.add(`opacity-50`); // Nếu đã quá hạn thì giảm độ mờ của card
-            card.classList.add(`pointer-events-none`); // Không cho phép tương tác với card đã quá hạn
+            card.classList.add(`opacity-50`);
+            checkboxLabel.classList.add(`pointer-events-none`);
+            checkboxInput.classList.add(`pointer-events-none`); 
         }
 
         contentDiv.appendChild(titleShow);
@@ -143,7 +145,7 @@
 
     function createPageShow(){
         let taskHeader = document.createElement(`div`);
-        taskHeader.className = `tasks-header flex m-3 gap-2`;
+        taskHeader.className = `tasks-header flex m-3 gap-2 relative`;
         
         let taskHeaderTitle = document.createElement(`h2`);
         taskHeaderTitle.className = `tasks-header__title text-2xl font-bold me-auto`;
@@ -172,11 +174,35 @@
         });
         
         let blockNotification = document.createElement(`div`);
-        blockNotification.className = `tasks-header__notification-block absolute right-5 top-17 w-120 bg-[#fefcff] dark:bg-[#11131a] rounded-md shadow-lg p-4 hidden`;
+        blockNotification.className = `tasks-header__notification-block absolute right-1 top-12 w-120 bg-Primary text-[#fefcff] rounded-md shadow-lg p-4 hidden z-10`;
         let notificationTitle = document.createElement(`h3`);
         notificationTitle.className = `text-sm font-bold mb-2`;
         notificationTitle.textContent = `Thông báo`;
         blockNotification.appendChild(notificationTitle);
+        let notificationContent = document.createElement(`p`);
+        notificationContent.className = `text-xs text-[#fefcff]`;
+        if(tasksExpiry.length === 0){   
+            notificationContent.textContent = `Không có công việc nào quá hạn!`;
+        } else {
+            let listExpiry = document.createElement(`ul`);
+            listExpiry.className = `text-xs text-[#fefcff]`;
+            tasksExpiry.forEach(task => {
+                let taskExpiry = document.createElement(`div`);
+                taskExpiry.className = `flex items-center mb-1`;
+
+                let icon = document.createElement(`i`);
+                icon.className = `fa-solid ${task[`completed`] ? 'fa-check-circle text-green-500' : 'fa-circle-exclamation text-red-500'}  mr-1`;
+                taskExpiry.appendChild(icon);
+
+                let item = document.createElement(`li`);
+                item.textContent = `${task[`completed`] ? 'Bạn đã hoàn thành' : 'Bạn chưa hoàn thành'} công việc "${task[`title`]}" đã quá hạn !`;
+                taskExpiry.appendChild(item);
+                listExpiry.appendChild(taskExpiry);
+            });
+            notificationContent.appendChild(listExpiry);
+
+        }
+        blockNotification.appendChild(notificationContent);
         taskHeader.appendChild(blockNotification);
 
         let taskHeaderNotification = document.createElement(`button`);
@@ -187,8 +213,14 @@
         taskHeaderNotification.addEventListener('click', () => {
             let blockNotification = document.querySelector(`.tasks-header__notification-block`);
             blockNotification.classList.toggle(`hidden`);
+            showTaskExpiryOnNofi();
         });
         taskHeader.appendChild(taskHeaderNotification);
+        let notificationBadge = document.createElement(`span`);
+        notificationBadge.className = `tasks-header__notification-badge absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center ${tasksExpiry.length > 0 ? '' : 'hidden'}`;
+        notificationBadge.textContent = tasksExpiry.length;
+        taskHeaderNotification.appendChild(notificationBadge);
+
         tasksShow.appendChild(taskHeader);
 
         // phần filter
@@ -196,21 +228,21 @@
         filter.className = `tasks-filter inline-flex mt-3 gap-5 bg-[#fefcff] dark:bg-[#11131a] rounded-2xl`;
         
         let filterAll = document.createElement(`button`);
-        filterAll.className = `tasks-filter__all px-4 py-3  text-xs rounded-2xl cursor-pointer`; 
+        filterAll.className = `tasks-filter__all px-4 py-3  text-xs rounded-2xl cursor-pointer  transition-all duration-200 ease-in`; 
         filterAll.textContent = `Tất cả`;
         filterAll.addEventListener(`click` , () =>{
             changeStateList(`All`);
         })
 
         let filterUnfinished = document.createElement(`button`);
-        filterUnfinished.className = `tasks-filter__work px-4 py-3 text-xs rounded-2xl cursor-pointer`; 
+        filterUnfinished.className = `tasks-filter__work px-4 py-3 text-xs rounded-2xl cursor-pointer transition-all duration-200 ease-in`; 
         filterUnfinished.textContent = `Chưa hoàn thành`;
         filterUnfinished.addEventListener(`click` , () =>{
             changeStateList(`Unfinished`);
         })
 
         let filterFinished = document.createElement(`button`);
-        filterFinished.className = `tasks-filter__finished px-4 py-3 text-xs rounded-2xl cursor-pointer`;
+        filterFinished.className = `tasks-filter__finished px-4 py-3 text-xs rounded-2xl cursor-pointer transition-all duration-200 ease-in`;
         filterFinished.textContent = `Đã hoàn thành`;
         filterFinished.addEventListener(`click` , () =>{
             changeStateList(`Finished`);
@@ -323,16 +355,24 @@
         renderListTask();
     }
 
-    function updateExpiry(id){
-        let pos = tasks.findIndex(task => task[`id`] === id);
-        if(pos !== -1){
-            const today = new Date();
-            const target = new Date(tasks[pos][`time`]);
-            target.setHours(24,0,0,0);
-            if(target >= today){
-                tasks[pos][`expiry`] = true;
-            } else {
-                tasks[pos][`expiry`] = false;
+    function updateAllExpiry(){
+        for(let task of tasks){
+            if(task[`expiry`] === true){
+                let today = new Date();
+                let taskTime = new Date(task[`time`]);
+                taskTime.setHours(24, 0, 0, 0);
+                if(taskTime < today){
+                    task[`expiry`] = false;
+                }
+            }
+        }
+    }
+
+    function showTaskExpiryOnNofi(){
+        for(let task of tasks){
+            let pos = tasksExpiry.findIndex(t => t[`id`] === task[`id`]);
+            if(pos === -1 && task[`expiry`] === false){
+                tasksExpiry.push(task);
             }
         }
     }
@@ -502,6 +542,8 @@
     function loadToLocalStorage(){
         let arrLocal = localStorage.getItem(`listTask`);
         tasks = JSON.parse(arrLocal);
+        updateAllExpiry();
+        showTaskExpiryOnNofi();
         renderListPage();
     }
 
